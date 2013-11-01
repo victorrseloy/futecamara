@@ -1,0 +1,21 @@
+﻿@model Futenado.ViewModels.SelecaoViewModel
+
+@using Futenado.Components
+
+@{Layout = null;}
+
+
+@foreach (var item in Model.TodosOsDeputados)
+{
+    
+    <li class="deputado-lista">
+        <div class="caixaVerde">
+                <h2 class="reset-text">@item.Nome - @item.Partido</h2>
+                <p>Assiduidade  <code>- @(item.Assiduidade*100) %</code></p>
+                <p>Comissoes  <code>- @item.Comissoes</code></p>
+                <p>Experiência  <code>- @item.Experiencia</code></p>
+            </div>
+        <img class="foto-selecao" src="@item.UrlFoto" /><a href="#" class="check-deputado @Html.CheckDeputado(Model.MeuTime,item.Id)" data-id="@item.Id"></a><span style="position: absolute;top: 155px;left: -5px;" class="nome-deputado">@item.Nome</span></li>
+}
+
+

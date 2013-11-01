@@ -1,0 +1,158 @@
+﻿@model Futenado.Models.Time
+
+<!--------------------------------INICIAL TELA 1------------------------------------->
+<div id="tela-1" class="tela" style="display: block;">
+
+    <div class="boxAtiva">
+
+        <div class="boxTopoInterno">
+            <div class="boxNomeDoTime">
+                <form action="#" method="POST">
+                    <input class="input" id="NomeTime" name="NomeTime" type="text" placeholder="Escreva aqui o nome de seu time" value="@Model.Nome" />
+                </form>
+            </div>
+            <h2>Tabela comparativa de habilidades</h2>
+            <ul>
+                <li>Goleiro - descricao das caracteristicas ideias para esta posicao</li>
+                <li>Atacante - descricao das caracteristicas ideias para esta posicao</li>
+                <li>Centro avante - descricao das caracteristicas ideias para esta posicao</li>
+                <li>Outra posição - descricao das caracteristicas ideias para esta posicao</li>
+            </ul>
+            @if (Model != null && Model.pathBrasao != null && Model.pathBrasao != "")
+            {
+                <a id="btnUpload" href="#" class="btBrasaoUsuario" style="background-image:url(@Url.Content(Model.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png"));"></a>
+            }
+            else
+            {
+                <a id="btnUpload" href="#" class="btCrieBrasao"></a>
+            }
+            <div id="callbackUpload"></div>
+        </div>
+        <div class="barraDivisao"></div>
+
+        <div class="boxListaDeputados">
+
+
+
+            <h2>Escolha e escale os deputados para seu time.</h2>
+            <span>vagas restantes: <code>10</code></span>
+            <ul>
+                @{Html.RenderAction("ListarDeputados");}
+            </ul>
+        </div>
+
+    </div>
+    <div class="barraVerde1 barra-nav"><a href="@Url.Action("passo2")" class="icoSetaAtiva"></a></div>
+    <div class="barraVerde2 barra-nav"><a href="@Url.Action("passo3")" class="icoSetaDesativa"></a></div>
+    <div class="barraVerde3 barra-nav"><a href="@Url.Action("passo4")" class="icoSetaDesativa"></a></div>
+
+</div>
+<script type="text/javascript" src="@Url.Content("~/Content/js/plupload/plupload.full.min.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".deputado-lista").mouseenter(function () {
+            $(".caixaVerde", this).show();
+        });
+        $(".deputado-lista").mouseleave(function () {
+            $(".caixaVerde", this).hide();
+        });
+
+        $(".check-deputado").click(function (e) {
+
+            var item = $(this);
+
+            e.preventDefault();
+            if ($(this).is(".check-deputado-marcado")) {
+
+                $.ajax({
+                    url: "@Html.Raw(Url.Action("remove", "Time"))",
+                    data: { idDeputado: $(this).data("id") },
+                    type: "POST",
+                    success: function (data) {
+                        item.removeClass("check-deputado-marcado");
+
+                    }
+                });
+
+
+            }
+            else {
+                $.ajax({
+                    url: "@Html.Raw(Url.Action("add", "Time"))",
+                    data: { idDeputado: $(this).data("id") },
+                    type: "POST",
+                    success: function (data) {
+                        item.addClass("check-deputado-marcado");
+
+                    }
+                });
+            }
+        });
+
+
+
+    });
+
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'btnUpload',
+        url: '@Url.Action("upload", "Home")',
+        max_file_size: '10mb',
+        chunk_size: '1mb',
+        unique_names: true,
+        dragdrop: true,
+        multiple_queues: false,
+        multi_selection: false,
+        max_file_count: 1,
+        flash_swf_url: '@Url.Content("~/Content/js/plupload/Moxie.swf")',
+        silverlight_xap_url: '@Url.Content("~/Content/js/plupload/Moxie.xap")',
+
+        filters: {
+            max_file_size: '10mb',
+            mime_types: [
+			    { title: "Arquivos de imagem", extensions: "jpg,gif,png" }
+            ]
+        },
+
+        init: {
+
+            FilesAdded: function (up, files) {
+                up.start();
+            },
+
+            UploadProgress: function (up, file) {
+                document.getElementById('callbackUpload').innerHTML = '<span>' + file.percent + "%</span>";
+            },
+
+            Error: function (up, err) {
+                document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
+            }
+        }
+    });
+
+    uploader.bind('FileUploaded', function (up, file, res) {
+        $.ajax({
+            url: "@Url.Action("AddBrasao", "Time")",
+            data: { img: file.target_name },
+            type: "GET"
+        });
+        $('#btnUpload').css("background-image", "url(@Url.Content("~/Uploads/")" + file.target_name + ")");
+    });
+
+    $("#NomeTime").keyup(function () {
+        clearTimeout(timeoutNome);
+        timeoutNome = setTimeout(function () {
+            $.ajax({
+                url: "@Html.Raw(Url.Action("MudarNome", "Time"))",
+                type: "POST",
+                data: { nome: $("#NomeTime").val() }
+
+            });
+        }, 1000);
+    });
+
+    var timeoutNome;
+
+    uploader.init();
+</script>
+<!--------------------------------FINALIZA TELA 1------------------------------------->

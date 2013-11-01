@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Futenado.Models.Usuario">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQA=</HashCode>
+      <FileName>Models\Usuario.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Time" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Futenado.Models.Deputado">
+    <Position X="5.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAIAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Deputado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Futenado.Models.Time">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Time.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Deputados" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Futenado.Models.Partida">
+    <Position X="0.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAACAAAAAAAAAIAQAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Models\Partida.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TimeDeFora" />
+      <Property Name="TimeDaCasa" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Futenado.Models.Chave">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Chave.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Times" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Futenado.Models.Regra">
+    <Position X="6.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Regra.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Futenado.Models.TemplateAtributo">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Atributo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

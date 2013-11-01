@@ -1,0 +1,94 @@
+﻿@model Futenado.Models.Time
+
+<!--------------------------------INICIAL TELA 2------------------------------------->
+        <div id="tela-2" class="tela">
+            <div id="barra" class="barraVerde1 barra-nav"><a href="@Url.Action("passo1")" class="icoSetaDesativa"></a></div>
+            <div class="boxAtiva">
+
+                <div class="boxTopoInterno2">
+                    <div class="boxNomeDoTime">
+                        <form action="#" method="POST">
+                            <input class="input" id="NomeTime" name="NomeTime" type="text" placeholder="Escreva aqui o nome de seu time" value="@Model.Nome" />
+                        </form>
+                    </div>
+                    <div class="Brasao">
+                        <img width="70" height="70" src="@Url.Content("~/Content/Images/modeloBrasaoP.png")" />
+                    </div>
+
+                </div>
+                <div class="barraDivisao"></div>
+                <div id="boxCampo">
+                    <div class="containerDadosCampo">
+                        <h2>Clique e arraste os deputados nas posições desejadas</h2>
+                        <p>Lembre-se que 3 deles são reservas!</p>
+                    </div>
+                    <ul class="posicionaDeputados">
+                        @foreach (var deputado in Model.Deputados)
+                        {
+                             <li class="drop-default">
+                            <img class="drag" data-id="@deputado.Id" style="position:relative;top:@(deputado.PosicaoY)px;left:@(deputado.PosicaoX)px" width="45px" height="45" src="@deputado.Deputado.UrlFoto" /></li>
+                        }
+                    </ul>
+
+                    <div class="bgCampo drop"></div>
+                </div>
+
+
+            </div>
+
+            <div class="barraVerde2 barra-nav"><a href="@Url.Action("passo3")" class="icoSetaAtiva"></a></div>
+            <div class="barraVerde3 barra-nav"><a href="@Url.Action("passo4")" class="icoSetaDesativa"></a></div>
+
+        </div>
+        <!--------------------------------FINALIZA TELA 2------------------------------------->
+
+
+<script type="text/javascript">
+    var timeoutNome;
+
+    $(function () {
+        $(".drag").draggable({ revert: "invalid" });
+
+        $(".drop").droppable({
+            drop: function (event,dropElem) {
+                $.ajax({
+                    url: "@Html.Raw(Url.Action("SetXY","Time"))",
+                    type: "POST",
+                    data: { idDeputadoTime: $(dropElem.draggable).data("id"), x: $(dropElem.draggable).css("left").replace("px", ""), y: $(dropElem.draggable).css("top").replace("px", "") }
+                        
+                });
+                return true;
+            }
+        });
+
+        $(".drop-default").droppable({
+            drop: function (event, dropElem) {
+                $.ajax({
+                    url: "@Html.Raw(Url.Action("SetXY","Time"))",
+                     type: "POST",
+                     data: { idDeputadoTime: $(dropElem.draggable).data("id"), x: 0, y: 0}
+
+                });
+
+                $(dropElem.draggable).css("top", "auto").css("left", "auto");
+
+                return true;
+            }
+        });
+
+        $("#NomeTime").keyup(function () {
+            clearTimeout(timeoutNome);
+            timeoutNome = setTimeout(function () {
+                $.ajax({
+                    url: "@Html.Raw(Url.Action("MudarNome","Time"))",
+                    type: "POST",
+                    data: { nome: $("#NomeTime").val() }
+
+                });
+            }, 1000);
+        });
+
+        
+
+    });
+</script>

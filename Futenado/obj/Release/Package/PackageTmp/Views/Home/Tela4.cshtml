@@ -1,0 +1,64 @@
+﻿@model List<Futenado.Models.Partida>
+@using Futenado.Components;
+@{
+    List<Futenado.ViewModels.NoticiaViewModel> noticias = Util.GetNoticias();
+}
+<!--------------------------------INICIAL TELA 4------------------------------------->
+<div id="tela-4" class="tela" >
+
+    <div class="boxAtiva" id="user-dashboard">
+        <div id="container-esquerda">
+            <div id="box-topo-dashboard" class="boxTopoInterno">
+                <img id="brasao-dashboard" src="@Url.Content(@Model.First(x => x.TimeDaCasa.UsuarioID == SessionManager.GetUsuario().Id).TimeDaCasa.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
+                <div>
+                    <h2 id="nomeTime">@Url.Content(@Model.First(x => x.TimeDaCasa.UsuarioID == SessionManager.GetUsuario().Id).TimeDaCasa.Nome)</h2>
+                    <a href="#" id="btConquistas" onclick="abrirConquistas()" style="z-index:3;" class="bt">ver minhas conquistas<img src="@Url.Content("~/Content/Images/icoSetaBranca.png")" /></a>
+                    <a href="@Url.Action("passo1")"" class="bt direita">voltar / editar<img src="@Url.Content("~/Content/Images/icoSetaBranca.png")" /></a>
+                </div>
+            </div>
+            <div style="width: 700px;" class="barraDivisao"></div>
+
+
+            <div id="container-tabela-jogos">
+                <h3>TABELA DE JOGOS</h3>
+                <table cellspacing="0" class="tabela-jogos">
+                    @foreach(var i in Model)
+                    {
+                        <tr>
+                            <td>Dia @i.DataDoJogo.ToString("dd/MM/yyyy")</td>
+                            <td class="tabela-jogos-coluna2">
+                                <img class="esquerda" width="50" height="50" src="@Url.Content(i.TimeDaCasa.pathBrasao  ?? "~/Content/Images/modeloBrasaoP.png")" />
+                                @i.PlacarTimeDaCasa X @i.PlacarTimeDeFora
+                                <img class="direita" width="50" height="50" src="@Url.Content(i.TimeDeFora.pathBrasao  ?? "~/Content/Images/modeloBrasaoP.png")" />
+                            </td>
+                        </tr>
+                    }
+                    
+                </table>
+            </div>
+        </div>
+        <div id="container-direita">
+            <h3>NOTICIAS</h3>
+            @foreach (var i in noticias)
+            {
+                <div class="noticia">
+                    <div class="data"><a href="@i.href" target="_blank">@i.data</a></div>
+                    <div class="texto-noticia"><a href="@i.href" target="_blank">@i.texto</a></div>
+                </div>
+            }
+            @*
+            <div class="noticia">
+                <div class="data">30 nov 2013</div>
+                <div class="texto-noticia">Lorem impsum sit dolor amet Lorem impsum sit dolor amet Lorem impsum sit dolor amet Lorem impsum sit dolor amet Lorem impsum sit dolor amet</div>
+            </div>
+            <div class="noticia">
+                <div class="data">30 nov 2013</div>
+                <div class="texto-noticia">Lorem impsum sit dolor amet Lorem impsum sit dolor amet Lorem impsum sit dolor amet Lorem impsum sit dolor amet Lorem impsum sit dolor amet</div>
+            </div>
+
+            <a id="veja-mais" href="#">VEJA +</a>
+            *@
+        </div>
+    </div>
+</div>
+<!--------------------------------FINALIZA TELA 4------------------------------------->

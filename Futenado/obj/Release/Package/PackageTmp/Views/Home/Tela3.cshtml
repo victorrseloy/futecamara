@@ -1,0 +1,77 @@
+﻿@model Futenado.Models.Chave
+@using Futenado.Components;
+
+<link href="@Url.Content("~/Content/css/jquery.tooltip.css")" rel="stylesheet"/>
+
+<!--------------------------------INICIAL TELA 2------------------------------------->
+<div id="tela-3" class="tela" >
+    <div id="barra" class="barraVerde1 barra-nav"><a href="@Url.Action("passo1")" class="icoSetaDesativa"></a></div>
+    <div class="barraVerde2 barra-nav"><a href="@Url.Action("passo2")" class="icoSetaDesativa"></a></div>
+    <div class="boxAtiva">
+
+        <div class="boxTopoInterno2">
+            <h2 class="centralizado">CONFIRA A CHAVE DO SEU TIME</h2>
+        </div>
+        <div class="barraDivisao margim-topo"></div>
+        <div class="barra-lateral-esquerda">
+            <img  class="brasao-img" src="@Url.Content(Model.Times.FirstOrDefault(x => x.UsuarioID == SessionManager.GetUsuario().Id).pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
+            <p> Acompanhe diariamente a evolução de seu time e faça as mudanças necessárias de acordo com os estatus dos políticos</p>
+            <span class="destaque">Lembre-se</span>
+            <p> que os dados são atualizados diariemente, o bom jogador de hoje pode não ser o melhor de amanhã.</p>
+        </div>
+        <div class="brasoes">
+            @foreach (var i in Model.Times)
+            {
+                <img  class="brasao-img item-galeria" data-date="@i.Usuario.UltimoLogin.ToString("dd/MM/yyyy")" data-name="@i.Usuario.Nome" data-image="@i.Usuario.FotoPerfil" src="@Url.Content(i.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
+            }
+        </div>
+
+    </div>
+    <div class="barraVerde3 barra-nav"><a href="@Url.Action("passo4")" class="icoSetaAtiva"></a></div>
+
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tooltip.js")"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.item-galeria').tooltip({
+            track: true,
+            delay: 0,
+            showURL: false,
+            bodyHandler: function () {
+                var element = $(this);
+                var strHtml = '';
+                strHtml += '<div class="box-jogador">';
+                strHtml += '    <img src="' + $(element).attr('data-image') + '">';
+                strHtml += '    <span class="nome-jogador-box">' + $(element).attr('data-name') + '<br></span>';
+                strHtml += '    <span>Última vez online<br>' + $(element).attr('data-date') + '</span>';
+                strHtml += '</div>';
+                return strHtml;
+            } ,
+            content: function () {
+                
+
+
+                console.log('entrou');
+                /*
+
+                if (element.is("[data-geo]")) {
+                    var text = element.text();
+                    return "<img class='map' alt='" + text +
+                      "' src='http://maps.google.com/maps/api/staticmap?" +
+                      "zoom=11&size=350x350&maptype=terrain&sensor=false&center=" +
+                      text + "'>";
+                }
+                if (element.is("[title]")) {
+                    return element.attr("title");
+                }
+                if (element.is("img")) {
+                    return element.attr("alt");
+                }
+                */
+            }
+        });
+    });
+</script>
+<!--------------------------------FINALIZA TELA 2------------------------------------->
