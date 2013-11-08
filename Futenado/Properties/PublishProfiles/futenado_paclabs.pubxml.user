@@ -67,7 +67,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/22/2013 10:31:26</publishTime>
     </File>
     <File Include="bin/Futenado.dll">
-      <publishTime>11/01/2013 01:21:48</publishTime>
+      <publishTime>11/08/2013 16:04:32</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.Edm.resources.dll">
       <publishTime>10/22/2013 10:31:28</publishTime>
@@ -162,6 +162,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Web.WebPages.Razor.dll">
       <publishTime>10/22/2013 10:31:12</publishTime>
     </File>
+    <File Include="bin/WebActivatorEx.dll">
+      <publishTime>11/08/2013 11:25:27</publishTime>
+    </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/22/2013 10:31:44</publishTime>
     </File>
@@ -190,7 +193,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/22/2013 10:31:26</publishTime>
     </File>
     <File Include="Content/css/futenado.css">
-      <publishTime>10/31/2013 21:41:08</publishTime>
+      <publishTime>11/08/2013 14:16:20</publishTime>
     </File>
     <File Include="Content/css/jquery.tooltip.css">
       <publishTime>10/31/2013 14:51:28</publishTime>
@@ -250,7 +253,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/22/2013 10:38:40</publishTime>
     </File>
     <File Include="Content/Images/fechar.png">
-      <publishTime>10/29/2013 12:00:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/Images/icoFaceOff.png">
       <publishTime>10/22/2013 10:38:40</publishTime>
@@ -293,6 +296,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/Images/trofeu.png">
       <publishTime>10/25/2013 17:03:51</publishTime>
+    </File>
+    <File Include="Content/js/jquery.metadata.js">
+      <publishTime>11/08/2013 13:48:46</publishTime>
+    </File>
+    <File Include="Content/js/jquery.tablesorter.min.js">
+      <publishTime>11/08/2013 13:48:46</publishTime>
     </File>
     <File Include="Content/js/jquery.tooltip.js">
       <publishTime>10/31/2013 14:51:28</publishTime>
@@ -466,7 +475,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/31/2013 11:34:16</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>10/22/2013 10:30:49</publishTime>
+      <publishTime>11/01/2013 01:53:10</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/22/2013 10:31:06</publishTime>
@@ -682,7 +691,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/31/2013 18:13:31</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>10/31/2013 20:11:58</publishTime>
+      <publishTime>11/08/2013 11:25:28</publishTime>
     </File>
     <File Include="Properties/DataSources/System.Xml.XmlNode.datasource">
       <publishTime>10/29/2013 16:40:03</publishTime>
@@ -775,37 +784,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/22/2013 10:30:49</publishTime>
     </File>
     <File Include="Views/Home/Conquistas.cshtml">
-      <publishTime>10/29/2013 12:04:58</publishTime>
+      <publishTime>11/06/2013 15:36:20</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>10/22/2013 10:30:49</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>10/31/2013 20:42:05</publishTime>
+      <publishTime>11/06/2013 15:36:59</publishTime>
     </File>
     <File Include="Views/Home/ListarDeputados.cshtml">
-      <publishTime>11/01/2013 00:13:11</publishTime>
+      <publishTime>11/08/2013 10:38:51</publishTime>
     </File>
     <File Include="Views/Home/Login.cshtml">
-      <publishTime>10/30/2013 11:40:51</publishTime>
+      <publishTime>11/06/2013 15:34:30</publishTime>
+    </File>
+    <File Include="Views/Home/TabelaDeClassificacao.cshtml">
+      <publishTime>11/08/2013 14:33:59</publishTime>
     </File>
     <File Include="Views/Home/Tela1.cshtml">
-      <publishTime>10/31/2013 19:30:59</publishTime>
+      <publishTime>11/08/2013 15:45:43</publishTime>
     </File>
     <File Include="Views/Home/Tela2.cshtml">
-      <publishTime>10/31/2013 18:29:11</publishTime>
+      <publishTime>11/08/2013 16:01:47</publishTime>
     </File>
     <File Include="Views/Home/Tela3.cshtml">
-      <publishTime>10/31/2013 19:17:14</publishTime>
+      <publishTime>11/08/2013 10:26:48</publishTime>
     </File>
     <File Include="Views/Home/Tela4.cshtml">
-      <publishTime>10/31/2013 21:39:47</publishTime>
+      <publishTime>11/08/2013 15:33:11</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>10/22/2013 10:30:49</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/01/2013 01:20:51</publishTime>
+      <publishTime>11/08/2013 10:25:39</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>10/22/2013 10:30:49</publishTime>
@@ -817,7 +829,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/22/2013 10:30:49</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/01/2013 01:22:03</publishTime>
+      <publishTime>11/08/2013 16:04:48</publishTime>
     </File>
   </ItemGroup>
 </Project>

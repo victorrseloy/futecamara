@@ -2,8 +2,8 @@
 @using Futenado.Components;
 
 <link href="@Url.Content("~/Content/css/jquery.tooltip.css")" rel="stylesheet"/>
-
-<!--------------------------------INICIAL TELA 2------------------------------------->
+<!--- Copyright 2013 de Victor Ribeiro da Silva Eloy Este arquivo é parte do programa FUTECAMARA. O FUTECAMARA é um software livre; você pode redistribuí-lo e/ou modificá-lo dentro dos termos da GNU General Public License como publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença. Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a licença para maiores detalhes. Você deve ter recebido uma cópia da GNU General Public License, sob o título "LICENSE", junto com este programa, se não, acesse http://www.gnu.org/licenses/ --->
+<!--------------------------------INICIAL TELA 3------------------------------------->
 <div id="tela-3" class="tela" >
     <div id="barra" class="barraVerde1 barra-nav"><a href="@Url.Action("passo1")" class="icoSetaDesativa"></a></div>
     <div class="barraVerde2 barra-nav"><a href="@Url.Action("passo2")" class="icoSetaDesativa"></a></div>
@@ -22,7 +22,7 @@
         <div class="brasoes">
             @foreach (var i in Model.Times)
             {
-                <img  class="brasao-img item-galeria" data-date="@i.Usuario.UltimoLogin.ToString("dd/MM/yyyy")" data-name="@i.Usuario.Nome" data-image="@i.Usuario.FotoPerfil" src="@Url.Content(i.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
+                <img  class="brasao-img item-galeria" data-date="@i.Usuario.UltimoLogin.ToString("dd/MM/yyyy")" data-name="@i.Usuario.Nome" data-image="@Url.Content(i.Usuario.FotoPerfil ?? "~/Content/Images/modeloBrasaoP.png")" src="@Url.Content(i.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
             }
         </div>
 
@@ -50,28 +50,9 @@
                 return strHtml;
             } ,
             content: function () {
-                
-
-
                 console.log('entrou');
-                /*
-
-                if (element.is("[data-geo]")) {
-                    var text = element.text();
-                    return "<img class='map' alt='" + text +
-                      "' src='http://maps.google.com/maps/api/staticmap?" +
-                      "zoom=11&size=350x350&maptype=terrain&sensor=false&center=" +
-                      text + "'>";
-                }
-                if (element.is("[title]")) {
-                    return element.attr("title");
-                }
-                if (element.is("img")) {
-                    return element.attr("alt");
-                }
-                */
             }
         });
     });
 </script>
-<!--------------------------------FINALIZA TELA 2------------------------------------->
+<!--------------------------------FINALIZA TELA 3------------------------------------->

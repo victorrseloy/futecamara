@@ -1,5 +1,5 @@
 ﻿@model Futenado.Models.Time
-
+<!--- Copyright 2013 de Victor Ribeiro da Silva Eloy Este arquivo é parte do programa FUTECAMARA. O FUTECAMARA é um software livre; você pode redistribuí-lo e/ou modificá-lo dentro dos termos da GNU General Public License como publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença. Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a licença para maiores detalhes. Você deve ter recebido uma cópia da GNU General Public License, sob o título "LICENSE", junto com este programa, se não, acesse http://www.gnu.org/licenses/ --->
 <!--------------------------------INICIAL TELA 1------------------------------------->
 <div id="tela-1" class="tela" style="display: block;">
 
@@ -35,7 +35,7 @@
 
 
             <h2>Escolha e escale os deputados para seu time.</h2>
-            <span>vagas restantes: <code>10</code></span>
+            <span>vagas restantes: <code id="total">10</code></span>
             <ul>
                 @{Html.RenderAction("ListarDeputados");}
             </ul>
@@ -50,6 +50,15 @@
 <script type="text/javascript" src="@Url.Content("~/Content/js/plupload/plupload.full.min.js")"></script>
 <script type="text/javascript">
     $(function () {
+        $("#total").html(14 - $(".check-deputado-marcado").length);
+
+        $(".barra-nav").click(function (e) {
+            if ($(".check-deputado-marcado").length < 14) {
+                e.preventDefault();
+                alert("Você ainda não escolheu 14 deputados");
+            }
+        });
+
         $(".deputado-lista").mouseenter(function () {
             $(".caixaVerde", this).show();
         });
@@ -70,22 +79,28 @@
                     type: "POST",
                     success: function (data) {
                         item.removeClass("check-deputado-marcado");
-
+                        $("#total").html(14-$(".check-deputado-marcado").length);
                     }
                 });
 
 
             }
             else {
-                $.ajax({
-                    url: "@Html.Raw(Url.Action("add", "Time"))",
-                    data: { idDeputado: $(this).data("id") },
-                    type: "POST",
-                    success: function (data) {
-                        item.addClass("check-deputado-marcado");
+                if ($(".check-deputado-marcado").length <= 14) {
 
-                    }
-                });
+                    $.ajax({
+                        url: "@Html.Raw(Url.Action("add", "Time"))",
+                        data: { idDeputado: $(this).data("id") },
+                        type: "POST",
+                        success: function (data) {
+                            item.addClass("check-deputado-marcado");
+                            $("#total").html(14 - $(".check-deputado-marcado").length);
+                        }
+                    });
+                }
+                else {
+                    alert("você já tem 14 deputados no seu time");
+                }
             }
         });
 

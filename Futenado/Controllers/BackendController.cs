@@ -96,7 +96,7 @@ namespace Futenado.Controllers
                     }
 
 
-                    deputado.Assiduidade = (presencas / total) * 10;
+                    deputado.Assiduidade = (presencas / total);
 
                 }
                 catch { }
@@ -201,20 +201,22 @@ namespace Futenado.Controllers
 
                 var deputadosTimeCasa = partida.TimeDaCasa.Deputados.ConvertAll(x => x.Deputado);
                 var deputadosTimeFora = partida.TimeDeFora.Deputados.ConvertAll(x => x.Deputado);
-
+                
+                //o peso da assiduidade é maior que o da experiencia e o das participacoes em comissoes
                 float ProbabilidadeGolCasa = 
-                    ((deputadosTimeCasa.Sum(x => x.Assiduidade) / deputadosTimeCasa.Count())
+                    3*((deputadosTimeCasa.Sum(x => x.Assiduidade) / (deputadosTimeCasa.Count()))
                     +
                     ((deputadosTimeCasa.Sum(x => x.Comissoes)/comissoesMax) / deputadosTimeCasa.Count())
                      +
-                    ((deputadosTimeCasa.Sum(x => x.Experiencia) / xpMax) / deputadosTimeCasa.Count()))/3
+                    ((deputadosTimeCasa.Sum(x => x.Experiencia) / xpMax) / deputadosTimeCasa.Count()))/5
                     ;
 
-                var ProbabilidadeGolFora = ((deputadosTimeFora.Sum(x => x.Assiduidade) / deputadosTimeFora.Count())
+                var ProbabilidadeGolFora = 
+                    3*((deputadosTimeFora.Sum(x => x.Assiduidade) / (deputadosTimeFora.Count()))
                     +
                     ((deputadosTimeFora.Sum(x => x.Comissoes) / comissoesMax) / deputadosTimeFora.Count())
                      +
-                    ((deputadosTimeFora.Sum(x => x.Experiencia) / xpMax) / deputadosTimeFora.Count())) / 3;
+                    ((deputadosTimeFora.Sum(x => x.Experiencia) / xpMax) / deputadosTimeFora.Count())) / 5;
 
                 for (int i = 0; i < 5; i++)
                 {

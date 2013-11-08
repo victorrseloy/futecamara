@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Futenado.ViewModels.ClassificacaoViewModel>
+
+@{
+    ViewBag.Title = "TabelaDeClassificacao";
+}
+
+@Scripts.Render("~/Scripts/jquery-1.8.2.js")
+@Scripts.Render("~/Content/js/jquery.metadata.js")
+@Scripts.Render("~/Content/js/jquery.tablesorter.min.js")
+@Styles.Render("~/Content/css/green/style.css")
+
+
+
+
+<table id="classificacao" class="tablesorter">
+    <thead>
+        <tr>
+            <th style="width:30%">Time
+            </th>
+            <th>V
+            </th>
+            <th>D
+            </th>
+            <th>E
+            </th>
+            <th>J
+            </th>
+            <th>GF
+            </th>
+            <th>P
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img width="50" height="50" style="vertical-align:middle" src="@Url.Content(item.CaminhoBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
+                    - @item.NomeTime - @item.NomeJogador
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vitorias)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Derrotas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empates)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jogos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gols)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pontos)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function () {
+        $("#classificacao").tablesorter();
+    });
+
+</script>

@@ -1,19 +1,25 @@
 ﻿@model List<Futenado.Models.Partida>
 @using Futenado.Components;
+@using Futenado.Models;
+
 @{
     List<Futenado.ViewModels.NoticiaViewModel> noticias = Util.GetNoticias();
+    Time meuTime = ViewBag.time as Time;
+
 }
+<!--- Copyright 2013 de Victor Ribeiro da Silva Eloy Este arquivo é parte do programa FUTECAMARA. O FUTECAMARA é um software livre; você pode redistribuí-lo e/ou modificá-lo dentro dos termos da GNU General Public License como publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença. Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a licença para maiores detalhes. Você deve ter recebido uma cópia da GNU General Public License, sob o título "LICENSE", junto com este programa, se não, acesse http://www.gnu.org/licenses/ --->
 <!--------------------------------INICIAL TELA 4------------------------------------->
 <div id="tela-4" class="tela" >
 
     <div class="boxAtiva" id="user-dashboard">
         <div id="container-esquerda">
             <div id="box-topo-dashboard" class="boxTopoInterno">
-                <img id="brasao-dashboard" src="@Url.Content(@Model.First(x => x.TimeDaCasa.UsuarioID == SessionManager.GetUsuario().Id).TimeDaCasa.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
+                <img id="brasao-dashboard" src="@Url.Content(meuTime.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
                 <div>
-                    <h2 id="nomeTime">@Url.Content(@Model.First(x => x.TimeDaCasa.UsuarioID == SessionManager.GetUsuario().Id).TimeDaCasa.Nome)</h2>
+                    <h2 id="nomeTime">@meuTime.Nome</h2>
                     <a href="#" id="btConquistas" onclick="abrirConquistas()" style="z-index:3;" class="bt">ver minhas conquistas<img src="@Url.Content("~/Content/Images/icoSetaBranca.png")" /></a>
-                    <a href="@Url.Action("passo1")"" class="bt direita">voltar / editar<img src="@Url.Content("~/Content/Images/icoSetaBranca.png")" /></a>
+                    <a href="@Url.Action("TabelaDeClassificacao")" target="_blank" id="btClassificacao" style="z-index:3;" class="bt">Classificação<img src="@Url.Content("~/Content/Images/icoSetaBranca.png")" /></a>
+                    <a href="@Url.Action("passo1")" class="bt direita">voltar / editar<img src="@Url.Content("~/Content/Images/icoSetaBranca.png")" /></a>
                 </div>
             </div>
             <div style="width: 700px;" class="barraDivisao"></div>

@@ -131,6 +131,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
@@ -198,7 +201,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Components\BackgroundService.cs" />
     <Compile Include="Components\HtmlExtensions.cs" />
+    <Compile Include="Components\SampleAspNetTimer.cs" />
     <Compile Include="Components\SessionManager.cs" />
     <Compile Include="Components\Util.cs" />
     <Compile Include="Controllers\BackendController.cs" />
@@ -225,6 +230,7 @@
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Regra.cs" />
     <Compile Include="Models\Time.cs" />
+    <Compile Include="ViewModels\ClassificacaoViewModel.cs" />
     <Compile Include="ViewModels\SelecaoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +269,8 @@
     <Content Include="Content\Images\modelo.jpg" />
     <Content Include="Content\Images\modeloBrasaoP.png" />
     <Content Include="Content\Images\trofeu.png" />
+    <Content Include="Content\js\jquery.metadata.js" />
+    <Content Include="Content\js\jquery.tablesorter.min.js" />
     <Content Include="Content\js\jquery.tooltip.js" />
     <Content Include="Content\js\plupload\i18n\bs.js" />
     <Content Include="Content\js\plupload\i18n\cs.js" />
@@ -433,7 +441,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Home\Tela1.cshtml" />
     <Content Include="Views\Home\Tela2.cshtml" />
     <Content Include="Views\Home\Tela3.cshtml" />
@@ -446,6 +456,7 @@
     <Content Include="Views\Deputado\Edit.cshtml" />
     <Content Include="Views\Deputado\Delete.cshtml" />
     <Content Include="Views\Home\ListarDeputados.cshtml" />
+    <Content Include="Views\Home\TabelaDeClassificacao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadImage\" />

@@ -19,5 +19,6 @@ namespace Futenado.Components
         {
             return HttpContext.Current.Session["USUARIO"] as Usuario;
         }
+
     }
 }

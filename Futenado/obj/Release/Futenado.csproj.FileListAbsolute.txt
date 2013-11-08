@@ -89,6 +89,4 @@ C:\tfs\Projetos e Inventos da Paclabs\Futenado\bin\RestSharp.dll
 C:\tfs\Projetos e Inventos da Paclabs\Futenado\bin\CsQuery.xml
 C:\tfs\Projetos e Inventos da Paclabs\Futenado\bin\Facebook.xml
 C:\tfs\Projetos e Inventos da Paclabs\Futenado\bin\RestSharp.xml
-C:\tfs\Projetos e Inventos da Paclabs\Futenado\obj\Release\Futenado.Migrations._002.resources
-C:\tfs\Projetos e Inventos da Paclabs\Futenado\obj\Release\Futenado.Migrations._003.resources
-C:\tfs\Projetos e Inventos da Paclabs\Futenado\obj\Release\Futenado.csproj.GenerateResource.Cache
+C:\tfs\Projetos e Inventos da Paclabs\Futenado\bin\WebActivatorEx.dll

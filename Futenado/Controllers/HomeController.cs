@@ -37,7 +37,7 @@ namespace Futenado.Controllers
             Time model = db.Times.Include(_time => _time.Deputados)
                     .FirstOrDefault(_time => _time.UsuarioID == idusuario);
 
-            return View("tela1",model);
+            return View("tela1", model);
         }
 
         public ActionResult passo2()
@@ -55,19 +55,20 @@ namespace Futenado.Controllers
             int idusuario = SessionManager.GetUsuario().Id;
             Time time = db.Times.Include(_time => _time.Deputados)
                     .FirstOrDefault(_time => _time.UsuarioID == idusuario);
-            
 
 
 
-            return View("tela3",time.Chave);
+
+            return View("tela3", time.Chave);
         }
-        //Comment
+
         public ActionResult passo4()
         {
             int idusuario = SessionManager.GetUsuario().Id;
             Time time = db.Times.Include(_time => _time.Deputados)
                     .FirstOrDefault(_time => _time.UsuarioID == idusuario);
-            var partidas = db.Partidas.Where(x => x.TimeDaCasaID == time.ChaveID || x.TimeDeForaID == time.ChaveID).OrderBy(x=>x.DataDoJogo).ToList();
+            var partidas = db.Partidas.Where(x => x.TimeDaCasaID == time.Id || x.TimeDeForaID == time.Id).OrderBy(x => x.DataDoJogo).ToList();
+            ViewBag.time = time;
             if (partidas.Any())
             {
                 return View("tela4", partidas);
@@ -75,10 +76,74 @@ namespace Futenado.Controllers
             else
             {
                 GerarTabelaJogos(time.Chave);
-                partidas = db.Partidas.Where(x => x.TimeDaCasaID == time.ChaveID || x.TimeDeForaID == time.ChaveID).OrderBy(x => x.DataDoJogo).ToList();
+                partidas = db.Partidas.Where(x => x.TimeDaCasaID == time.Id || x.TimeDeForaID == time.Id).OrderBy(x => x.DataDoJogo).ToList();
                 return View("tela4", partidas);
             }
-            
+
+        }
+
+        public ActionResult TabelaDeClassificacao(int id = 0)
+        {
+            //tenta pegar o id passado
+            Chave minhaChave = null;
+
+            if (id != 0)
+            {
+                minhaChave = db.Chaves.
+              Include(_chave => _chave.Times).
+               FirstOrDefault(_chave => _chave.Id == id);
+            }
+
+            else if (SessionManager.GetUsuario() != null)
+            {
+                int idJogador = SessionManager.GetUsuario().Id;
+                id = db.Times.Where(_time => _time.UsuarioID == idJogador).Select(_time => _time.ChaveID).First();
+                minhaChave = db.Chaves.
+                    Include(_chave => _chave.Times).
+                    FirstOrDefault(_chave => _chave.Id == id);
+            }
+
+            if (minhaChave == null)
+            {
+                return HttpNotFound();
+            }
+
+            List<ClassificacaoViewModel> classificacao = new List<ClassificacaoViewModel>();
+
+            foreach (var time in minhaChave.Times)
+            {
+                var partidas = db.Partidas.Where(_partida => _partida.TimeDeForaID == time.Id || _partida.TimeDaCasaID == time.Id);
+                var viewModel = new ClassificacaoViewModel();
+                viewModel.CaminhoBrasao = time.pathBrasao;
+                viewModel.NomeJogador = time.Usuario.Nome;
+                viewModel.NomeTime = time.Nome;
+                viewModel.Vitorias = partidas.Count(_partida =>
+                    ((_partida.TimeDaCasaID == time.Id && _partida.PlacarTimeDaCasa > _partida.PlacarTimeDeFora) ||
+                    (_partida.TimeDeForaID == time.Id && _partida.PlacarTimeDeFora > _partida.PlacarTimeDaCasa))
+                    && _partida.JahOcorreu);
+
+                viewModel.Empates = partidas.Count(_partida => (_partida.PlacarTimeDaCasa == _partida.PlacarTimeDeFora)
+                    && _partida.JahOcorreu);
+
+                viewModel.Derrotas = partidas.Count(_partida => _partida.JahOcorreu) - (viewModel.Vitorias + viewModel.Empates);
+                classificacao.Add(viewModel);
+
+                //somando gols que fiz em casa
+                viewModel.Gols += partidas.
+                    Where(_partida => _partida.TimeDaCasaID == time.Id)
+                    .Sum(_x => _x.PlacarTimeDaCasa);
+
+                //somando gols que fiz fora de casa
+                viewModel.Gols += partidas.
+                    Where(_partida => _partida.TimeDeForaID == time.Id)
+                    .Sum(_x => _x.PlacarTimeDaCasa);
+            }
+
+            return View(classificacao.
+                OrderByDescending(_classificacao => _classificacao.Pontos).
+                ThenByDescending(_classificacao => _classificacao.Gols));
+
+
         }
 
 
@@ -100,7 +165,7 @@ namespace Futenado.Controllers
         {
             var deputados = db.Deputadoes.ToList();
             deputados = deputados.OrderBy(_deputado => Guid.NewGuid()).ToList();
-            
+
             SelecaoViewModel model = new SelecaoViewModel();
             model.TodosOsDeputados = deputados;
 
@@ -121,7 +186,7 @@ namespace Futenado.Controllers
                 {
                     model.MeuTime = new List<Deputado>();
                 }
-                    
+
             }
 
             return View(model);
@@ -151,8 +216,8 @@ namespace Futenado.Controllers
             DateTime AtualGame = DateTime.Now;
 
             List<DateTime> datasJogos = new List<DateTime>();
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || 
-                DateTime.Now.DayOfWeek == DayOfWeek.Monday || 
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday ||
+                DateTime.Now.DayOfWeek == DayOfWeek.Monday ||
                 DateTime.Now.DayOfWeek == DayOfWeek.Tuesday)
             {
                 nextGame = 1;
@@ -161,9 +226,9 @@ namespace Futenado.Controllers
             //Numero de jogos por time
             while (conta <= 20)
             {
-                AtualGame = GetNextGame(AtualGame,nextGame);
+                AtualGame = GetNextGame(AtualGame, nextGame);
                 datasJogos.Add(AtualGame);
-                if(nextGame == 1)
+                if (nextGame == 1)
                 {
                     nextGame = 0;
                 }
@@ -173,18 +238,18 @@ namespace Futenado.Controllers
                 }
                 conta++;
             }
-            
+
 
             int j = 0;
             int casa = 0;
             int fora = 0;
             Random random = new Random();
-            for (int i = 0; i < (chave.Times.Count-1); i++)
+            for (int i = 0; i < (chave.Times.Count - 1); i++)
             {
                 j = i + 1;
                 for (; j < chave.Times.Count; j++)
                 {
-                    
+
                     if (random.NextDouble() < .5)
                     {
                         casa = i;
@@ -212,7 +277,7 @@ namespace Futenado.Controllers
                             dataTemp = date;
                             break;
                         }
-                        
+
                     }
                     Partida partida = new Partida
                     {
@@ -231,7 +296,7 @@ namespace Futenado.Controllers
             return true;
         }
 
-        private DateTime GetNextGame(DateTime anterior,int i)
+        private DateTime GetNextGame(DateTime anterior, int i)
         {
             //0:Domingo
             //1:Quarta
@@ -247,6 +312,12 @@ namespace Futenado.Controllers
             int daysDiff = (diaProcurado - (int)anterior.DayOfWeek + 7) % 7;
             DateTime nextGame = anterior.AddDays(daysDiff);
             return nextGame;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
 
     }

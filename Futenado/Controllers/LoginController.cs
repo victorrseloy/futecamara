@@ -78,6 +78,7 @@ namespace Futenado.Controllers
                 db.SaveChanges();
 
                 Time time = db.Times.FirstOrDefault(_time => _time.UsuarioID == usuarioFb.Id);
+                Time timeBot = null;
 
                 if (time == null)
                 {
@@ -89,7 +90,7 @@ namespace Futenado.Controllers
 
                     //criando a chave
                     int timesPorChave = Convert.ToInt32(ConfigurationManager.AppSettings["times_por_chave"]);
-                    Chave chave = db.Chaves.FirstOrDefault(_chave => _chave.Times.Count() > timesPorChave);
+                    Chave chave = db.Chaves.FirstOrDefault(_chave => _chave.Times.Count(_time => !_time.bot) <= timesPorChave);
                     //se nao há nenhuma chave livre
                     if (chave == null)
                     {
@@ -97,11 +98,39 @@ namespace Futenado.Controllers
                         db.Chaves.Add(chave);
                         PopularChave(chave, 11);
                     }
+                    else
+                    {
+                        //recupera o primeiro time do computador nesta chave
+                        timeBot = chave.Times.First(_time => _time.bot);
+                        List<Partida> partidas = db.Partidas.Where(_partida => _partida.TimeDeForaID == timeBot.Id || _partida.TimeDaCasaID == timeBot.Id).ToList();
+                        //altera as partidas jah existentes
+                        foreach (var partida in partidas)
+                        {
+                            if (partida.TimeDaCasaID == timeBot.Id)
+                            {
+                                partida.TimeDaCasaID = time.Id;
+                            }
+                            else
+                            {
+                                partida.TimeDeForaID = time.Id;
+                            }
+                        }
 
+                        
+                        
+                    }
+                    //salva as mudancas
                     chave.Times.Add(time);
-
-
                     db.SaveChanges();
+                    
+                    //se utilizou a substituicao de times apaga o time do computador
+                    if (timeBot != null)
+                    {
+                        //arrumar isso, nao deveria ser necessario recuperar de novo o time para poder excluilo
+                        timeBot = db.Times.First(_time => _time.Id == timeBot.Id);
+                        db.Times.Remove(timeBot);
+                        db.SaveChanges();
+                    }
                 }
             }
             else
@@ -143,15 +172,18 @@ namespace Futenado.Controllers
                 time.Deputados = new List<DeputadoTime>();
                 time.UsuarioID = bot.Id;
                 time.Chave = chave;
-                time.pathBrasao = "~/Content/Images/modeloBrasaoP.png";
+                time.pathBrasao = String.Format("~/Content/Images/Brasao{0}.jpg", i);
                 time.bot = true;
 
                 time.Nome = "Computador " + i;
 
                 db.Times.Add(time);
                 db.SaveChanges();
+
+                //selecionando 14 times aleatoriamente
                 var deputados = db.Deputadoes.OrderBy(r => Guid.NewGuid()).Take(14).
                     ToList().ConvertAll(_deputado => new DeputadoTime { DeputadoID = _deputado.Id, TimeID = time.Id });
+
                 time.Deputados.AddRange(deputados);
                 db.SaveChanges();
             }
@@ -177,6 +209,10 @@ namespace Futenado.Controllers
             }
             return pictureUrl;
         }
-
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

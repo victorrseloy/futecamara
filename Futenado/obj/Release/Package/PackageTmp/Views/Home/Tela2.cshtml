@@ -1,5 +1,5 @@
 ﻿@model Futenado.Models.Time
-
+<!--- Copyright 2013 de Victor Ribeiro da Silva Eloy Este arquivo é parte do programa FUTECAMARA. O FUTECAMARA é um software livre; você pode redistribuí-lo e/ou modificá-lo dentro dos termos da GNU General Public License como publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença. Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a licença para maiores detalhes. Você deve ter recebido uma cópia da GNU General Public License, sob o título "LICENSE", junto com este programa, se não, acesse http://www.gnu.org/licenses/ --->
 <!--------------------------------INICIAL TELA 2------------------------------------->
         <div id="tela-2" class="tela">
             <div id="barra" class="barraVerde1 barra-nav"><a href="@Url.Action("passo1")" class="icoSetaDesativa"></a></div>
@@ -12,7 +12,7 @@
                         </form>
                     </div>
                     <div class="Brasao">
-                        <img width="70" height="70" src="@Url.Content("~/Content/Images/modeloBrasaoP.png")" />
+                        <img width="70" height="70" src="@Url.Content(Model.pathBrasao ?? "~/Content/Images/modeloBrasaoP.png")" />
                     </div>
 
                 </div>
@@ -88,7 +88,26 @@
             }, 1000);
         });
 
-        
+
+        $(".barraVerde2, .barraVerde3").click(function (e) {
+            var total = 0;
+            $(".drag").each(function () {
+                if ($(this).css("left") != "0px" && $(this).css("top") != "0px" && $(this).css("left") != "auto" && $(this).css("top") != "auto") {
+                    total++;
+                }
+            });
+
+            if (total > 11) {
+                alert("você deve escalar no máximo 11 deputados para serem titulares");
+                e.preventDefault();
+            }
+
+            else if(total < 11){
+                alert("você deve escalar no mínimo 11 deputados para serem titulares");
+                e.preventDefault();
+            }
+
+        });
 
     });
 </script>

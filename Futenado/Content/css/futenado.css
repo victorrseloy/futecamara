@@ -153,6 +153,7 @@ body {
     width: 150px;
     height: 200px;
     cursor: pointer;
+    background-size: 150px 200px;
 }
 
     .btCrieBrasao:hover {
@@ -443,6 +444,13 @@ a.check-deputado-marcado {
     bottom: 0;
     position: absolute;
     left: 150px;
+    z-index: 10;
+}
+
+#btClassificacao {
+    bottom: 0;
+    position: absolute;
+    left: 370px;
     z-index: 10;
 }
 
